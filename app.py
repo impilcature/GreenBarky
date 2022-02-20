@@ -1,10 +1,16 @@
+from pickle import TRUE
+from webbrowser import get
 from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import true
 from datetime import datetime
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bookmarks.db'
+app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 
 class Bookmarks(db.Model):
@@ -21,8 +27,13 @@ class Bookmarks(db.Model):
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
-        bookmark_content = request.form['bookmark']
-        new_bookmark = Bookmarks(bookmark=bookmark_content)
+        new_bookmark = Bookmarks(
+            title = request.form.get('title'), 
+            url = request.form.get('url'), 
+            notes = request.form.get('note'), 
+            date_added = datetime.now
+
+        )
 
         try:
             db.session.add(new_bookmark)
@@ -30,6 +41,9 @@ def index():
             return redirect('/')
         except:
             return 'There was an issue adding your bookmark'
+            app.logger.info('the try failed')
+
+            
 
     else:
         bookmarks = Bookmarks.query.order_by(Bookmarks.id).all()
@@ -46,8 +60,9 @@ def delete(id):
     except:
         return 'There was a problem deleting that bookmark'
 
-@app.route('/update/<init:id>', methods=['POST', 'GET'])
-def update(id):
+"""
+@app.route('/edit/<init:id>', methods=['GET', 'POST'])
+def edit(id):
     bookmark = Bookmarks.query.get_or_404(id)
     
     if request.method == 'POST':
@@ -60,10 +75,10 @@ def update(id):
             return redirect('/')
         except:
             return 'There was an issue updating your bookmark'
+
     else:
-        return render_template('update.html', bookmark_to_update = bookmark)
-
-
+        return render_template('update.html', bookmark = bookmark)
+"""
 
 if __name__ == '__main__':
     app.debug = True
