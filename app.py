@@ -1,10 +1,12 @@
+from asyncio.windows_events import NULL
 from pickle import TRUE
 from webbrowser import get
 from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import true
+from sqlalchemy import null, true
 from datetime import datetime
 import logging
+import time
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -27,21 +29,24 @@ class Bookmarks(db.Model):
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
+        form_title = request.form['title']
+        form_url = request.form['url'] 
+        form_notes = request.form['note']
+
         new_bookmark = Bookmarks(
-            title = request.form.get('title'), 
-            url = request.form.get('url'), 
-            notes = request.form.get('note'), 
-            date_added = datetime.now
-
+            title = form_title,
+            url = form_url,
+            notes = form_notes
+            #date_added = time.strftime('%Y-%m-%d %H:%M:%S')
+            #date_edited = null                
         )
-
         try:
             db.session.add(new_bookmark)
             db.session.commit()
             return redirect('/')
-        except:
+        except Exception as e:
             return 'There was an issue adding your bookmark'
-            app.logger.info('the try failed')
+            print(str(e))
 
             
 
