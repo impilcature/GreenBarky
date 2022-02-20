@@ -48,8 +48,6 @@ def index():
             return 'There was an issue adding your bookmark'
             print(str(e))
 
-            
-
     else:
         bookmarks = Bookmarks.query.order_by(Bookmarks.id).all()
         return render_template('index.html', bookmarks=bookmarks)
@@ -64,7 +62,6 @@ def delete(id):
         return redirect('/')
     except:
         return 'There was a problem deleting that bookmark'
-
 """
 @app.route('/edit/<init:id>', methods=['GET', 'POST'])
 def edit(id):
@@ -82,8 +79,8 @@ def edit(id):
             return 'There was an issue updating your bookmark'
 
     else:
-        return render_template('update.html', bookmark = bookmark)
-"""
+        return render_template('update.html', bookmark = bookmark)"""
+
 
 if __name__ == '__main__':
     app.debug = True
