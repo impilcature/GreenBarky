@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .note {
+        font-size: 120%;
+        color: red;
+      }
+      .green {
+        font-size: 110%;
+        color: green;
+      }
+      .vertical-menu {
+        width: 200px;
+      }
+
+      .vertical-menu a {
+        background-color: #eee;
+        color: black;
+        display: block;
+        padding: 12px;
+        text-decoration: none;
+      }
+
+      .vertical-menu a:hover {
+        background-color: #ccc;
+      }
+
+      .vertical-menu a.active {
+        background-color: #04AA6D;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+
+    <h1><span class=green >Green</span>Barky</h1>
+
+    <p>Enter your bookmarks below.</p>
+
+    <form action="/action_page.php">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title"><br><br>
+      <label for="URL">URL:</label>
+      <input type="text" id=";url" name="url"><br><br>
+      <label for="note">Note:</label>
+      <input type="text" id="note" name="note"><br><br>
+      <input type="submit" value="Submit">
+    </form><br><br>
+
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Notes</th>
+        <th>URL</th>
+        <th>Date Added</th>
+        <th>Date Edited</th>
+        <th>Actions</th>
+      </tr>
+      {% for bookmarks in bookmarks %}
+        <tr>
+          <td>{{ bookmarks.id }}</td>
+          <td>{{ bookmarks.notes }}</td>
+          <td>{{ bookmarks.url}}</td>
+          <td>{{ bookmarks.date_added }}</td>
+          <td>{{ bookmarks.date_edited }}</td>
+          <td>
+            <a href="/update/{{bookmarks.id}}">Update</a>
+            <br>
+            <a href="/delete/{{bookmarks.id}}">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    <br><br>
+    <div class="vertical-menu">
+      <a href="#" class="active">Home</a>
+      <a href="#">Edit a bookmark</a>
+      <a href="#">Delete a bookmark</a>
+      <a href="#">Import GitHub Stars</a>
+    </div>
+  </body>
+</html>
+

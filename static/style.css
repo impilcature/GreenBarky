@@ -1,0 +1,29 @@
+
+.note {
+  font-size: 120%;
+  color: red;
+}
+.green {
+  font-size: 110%;
+  color: green;
+}
+.vertical-menu {
+  width: 200px;
+}
+
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  background-color: #04AA6D;
+  color: white;
+}

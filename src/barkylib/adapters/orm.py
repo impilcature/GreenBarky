@@ -13,7 +13,7 @@ from sqlalchemy import (
 
 from sqlalchemy.orm import mapper
 
-from ..domain.models import Bookmark
+from domain.models import Bookmark
 
 logger = logging.getLogger(__name__)
 
